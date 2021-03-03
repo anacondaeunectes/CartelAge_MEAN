@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Film } from 'src/app/models/film.model';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -7,25 +7,53 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './film-card.component.html',
   styleUrls: ['./film-card.component.css']
 })
-export class FilmCardComponent implements OnInit {
+export class FilmCardComponent implements OnInit, OnChanges {
 
   @Input()
   film:Film;
 
-  constructor() { }
+  @Input()
+  favFilms:String[];
 
-  ngOnInit(): void {
+  constructor(private apiService:ApiService) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('1: ', changes.favFilms)
+    console.log('2:', this.favFilms)
+    if (changes.favFilms && this.favFilms.length > 0) {
+
+      if(this.favFilms.includes(this.film._id)){
+        this.film.isFav = true;
+      }
+    }
   }
 
-  // switchFav(){
-  //   if (this.film.isFav) {
-  //     // this.dbService.removeFav(this.film.id);
-  //     this.film.isFav = !this.film.isFav;
-  //   } else {
-  //     // this.dbService.addFav(this.film.id);
-  //   }
+  ngOnInit(): void {
+    // setInterval( () => console.log(this.favFilms), 2000)
+  }
+
+
+
+  switchFav(){
+
+    if (!this.film.isFav) {
+
+      this.apiService.favFilm(this.film).subscribe( res => {
+        console.log(res);
+        this.film.isFav = true;
+      })
+
+      // this.film.isFav = !this.film.isFav;
+    } else {
+      
+      this.apiService.unfavFilm(this.film).subscribe( res => {
+        console.log(res);
+        this.film.isFav = false;
+      })
+    }
+    
   
-  //   // console.log(this.film.isFav);
-  // }
+    // console.log(this.film.isFav);
+  }
 
 }

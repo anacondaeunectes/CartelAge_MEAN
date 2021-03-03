@@ -1,0 +1,7 @@
+<div *ngIf="this.loginService.user; else login">
+    <app-horizontal-container [title]="'Mis Favoritas'" [films]="this.films" [favRefs]="this.loginService.user.favRefs" ></app-horizontal-container>
+</div>
+
+<ng-template #login>
+    <app-log-in></app-log-in>
+</ng-template>

@@ -10,7 +10,7 @@ export class ApiService {
 
   readonly DB_URI:string ='http://localhost:3000/api';
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private loginService: LoginService) { }
 
   getFilms(){
     return this.http.get<Film[]>(this.DB_URI + '/film/');
@@ -30,6 +30,16 @@ export class ApiService {
 
   deleteFilm(id:String){
     return this.http.delete(this.DB_URI + '/film/' + id);
+  }
+
+  favFilm({ _id }){
+    console.log('llego')
+    console.log(this.DB_URI + '/user/' + this.loginService.user._id)
+    return this.http.put(this.DB_URI + '/user/fav/' + this.loginService.user._id , {new: _id});
+  }
+
+  unfavFilm({ _id }){
+    return this.http.put(this.DB_URI + '/user/unfav/' + this.loginService.user._id , {toRemove: _id});
   }
   
 }

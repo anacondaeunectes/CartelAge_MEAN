@@ -10,7 +10,8 @@ import { VerticalContainerComponent } from './components/vertical-container/vert
 import { HorizontalContainerComponent } from './components/horizontal-container/horizontal-container.component';
 import { LogInComponent } from './pages/log-in/log-in.component';
 import { PeliculasComponent } from './pages/peliculas/peliculas.component';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import { FavoritasComponent } from './pages/favoritas/favoritas.component'
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FormsModule } from '@angular/forms'
     VerticalContainerComponent,
     HorizontalContainerComponent,
     LogInComponent,
-    PeliculasComponent
+    PeliculasComponent,
+    FavoritasComponent
   ],
   imports: [
     BrowserModule,

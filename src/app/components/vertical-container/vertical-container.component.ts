@@ -16,6 +16,9 @@ export class VerticalContainerComponent implements OnInit {
 
   films:Film[] = []
 
+  @Input()
+  favFilms:string[];
+
   titleInput:string = "";
 
   imgInput = null;
@@ -72,7 +75,12 @@ export class VerticalContainerComponent implements OnInit {
 
   removeFilm(film:Film){
     if (this.isRemovingFilm) {
-      console.log('llego')
+
+      // If the film is fav, first unfav it from user's fav list and then delete it
+      if (film.isFav) {
+        this.apiService.unfavFilm(film).subscribe();
+      }
+
       this.apiService.deleteFilm(film._id).subscribe( res => {
         this.getFilms();
       })

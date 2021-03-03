@@ -28,7 +28,7 @@
         
         <div class="vertical__Container">
             <p id="emptyContainer" *ngIf="films.length == 0">No se ha encontrado ninguna película. Haz click en el botón "+" de la esquina superior derecha para agregar películas.</p>
-            <app-film-card *ngFor="let filmList of films; index as i" [film]="films[i]" (click)="removeFilm(films[i])"></app-film-card>
+            <app-film-card *ngFor="let filmList of films; index as i" [film]="films[i]" [favFilms]="favFilms" (click)="removeFilm(films[i])"></app-film-card>
         </div>
     </div>
 </div>
