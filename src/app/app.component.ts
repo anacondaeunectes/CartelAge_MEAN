@@ -1,6 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ApiService } from './services/api.service';
-import { FilmServiceService } from './services/film-service.service';
 import { LoginService } from './services/login.service';
 
 
@@ -12,22 +11,11 @@ import { LoginService } from './services/login.service';
 })
 export class AppComponent implements OnInit{
   title = 'CartelAge-MEAN';
-  films = [];
 
-  constructor(public filmService: FilmServiceService, private apiService:ApiService, public loginService: LoginService){ }
+  constructor(){ }
 
   ngOnInit(): void {
     // this.loadScript('https://apis.google.com/js/platform.js');
   }
-
-  // public loadScript(url: string) {
-  //   const body = document.body as HTMLDivElement;
-  //   const script = document.createElement('script');
-  //   script.innerHTML = '';
-  //   script.src = url;
-  //   script.async = false;
-  //   script.defer = true;
-  //   body.appendChild(script);
-  // }
 
 }

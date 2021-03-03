@@ -18,8 +18,8 @@ export class FilmCardComponent implements OnInit, OnChanges {
   constructor(private apiService:ApiService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('1: ', changes.favFilms)
-    console.log('2:', this.favFilms)
+    console.log('1111: ', changes.favFilms)
+    console.log('2222:', this.favFilms)
     if (changes.favFilms && this.favFilms.length > 0) {
 
       if(this.favFilms.includes(this.film._id)){
@@ -38,18 +38,20 @@ export class FilmCardComponent implements OnInit, OnChanges {
 
     if (!this.film.isFav) {
 
-      this.apiService.favFilm(this.film).subscribe( res => {
+      this.apiService.favFilm(this.film)
+      .then( x => x.subscribe( res => {
         console.log(res);
         this.film.isFav = true;
-      })
+      }))
 
       // this.film.isFav = !this.film.isFav;
     } else {
       
-      this.apiService.unfavFilm(this.film).subscribe( res => {
+      this.apiService.unfavFilm(this.film)
+      .then( x => x.subscribe( res => {
         console.log(res);
         this.film.isFav = false;
-      })
+      }))
     }
     
   

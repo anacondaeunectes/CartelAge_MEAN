@@ -10,14 +10,12 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class FavoritasComponent implements OnInit {
 
-  films:Film[];
+  // films:Film[];
 
-  constructor(public loginService: LoginService, public apiServicee:ApiService) { }
+  constructor(public loginService: LoginService, public apiService:ApiService) { }
 
   ngOnInit(): void {
-    this.apiServicee.getFilms().subscribe( res => {
-      this.films = res;
-    })
+    this.apiService.refreshFilms();
   }
 
 }

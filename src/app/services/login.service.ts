@@ -1,4 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 declare function signOut();
 
@@ -9,7 +10,9 @@ export class LoginService {
 
   user: any;
 
-  constructor(private zone:NgZone) { 
+  readonly DB_URI:string ='http://localhost:3000/api';
+
+  constructor(private zone:NgZone, private http:HttpClient) { 
     window['angularComponentReference'] = {
       zone: this.zone,
       component: this,
@@ -24,6 +27,15 @@ export class LoginService {
     // [Temporaly workaround] Makes the web to reload to force google sign-in button appear. Google sing-in button doesnt appear even when the DOM seems to load it :(  
     location.reload();
     signOut();
+  }
+
+  refreshFavList(){
+    this.http.get(this.DB_URI + '/user/' + this.user._id).subscribe( res => {
+      if (res) {
+        console.log(res)
+        this.user.favRefs = res;
+      }
+    })
   }
 
   loadUserInfo(userInfo: any){

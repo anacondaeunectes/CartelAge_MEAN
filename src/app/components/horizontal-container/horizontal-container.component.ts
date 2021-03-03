@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Film } from 'src/app/models/film.model';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-horizontal-container',
@@ -19,26 +20,41 @@ export class HorizontalContainerComponent implements OnInit, OnChanges {
   @Input()
   favRefs:string[] = [];
 
-  constructor() { 
-    // setInterval( () => console.log(this.films), 1000)
+  constructor(private loginService:LoginService) { 
    }
 
-  ngOnChanges(changes: SimpleChanges): void {
-
-    let tempFilm:Film;
-
-    this.favRefs.forEach( ref => {
-      console.log(this.films)
-      tempFilm = this.films.find( film => film._id == ref)
-      if (tempFilm) {
-        tempFilm.isFav = true;
-        this.favFilms.push(tempFilm)
-      }
-    })
+   ngOnInit(): void {
+    this.loginService.refreshFavList();
   }
 
-  ngOnInit(): void {
-    console.log('new')
+   //Its called if any change is made on any class property. So any changes on films, favRefs, etc. trigger this method
+  ngOnChanges(changes: SimpleChanges): void {
+
+    console.log('CHANGES: ', changes)
+
+    if(changes.favRefs){
+
+      let tempFilm:Film;
+
+      // console.log(this.films);
+      console.log(this.favRefs);
+
+      // compare user favs with every film in order to know which films are the fav ones
+      this.favRefs.forEach( ref => {
+        
+        if (!this.favFilms.find(fav => fav._id == ref )) {
+          console.log('llego')
+          tempFilm = this.films.find( film => film._id == ref)
+          if (tempFilm) {
+            console.log(tempFilm)
+            tempFilm.isFav = true;
+            this.favFilms.push(tempFilm)
+          }
+        }
+      })
+
+    }
+    
   }
 
 }

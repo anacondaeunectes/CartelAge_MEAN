@@ -6,11 +6,26 @@ import { Film } from '../models/film.model';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class ApiService implements OnInit{
+
+  films:Film[] = [];
 
   readonly DB_URI:string ='http://localhost:3000/api';
 
   constructor(private http:HttpClient, private loginService: LoginService) { }
+
+  ngOnInit(): void {
+    this.getFilms().subscribe( res => {
+      console.log(res)
+        this.films = res;
+      })
+  }
+
+  refreshFilms(){
+    this.getFilms().subscribe( res => {
+      this.films = res
+    })
+  }
 
   getFilms(){
     return this.http.get<Film[]>(this.DB_URI + '/film/');
@@ -32,14 +47,23 @@ export class ApiService {
     return this.http.delete(this.DB_URI + '/film/' + id);
   }
 
-  favFilm({ _id }){
+  async favFilm({ _id }){
     console.log('llego')
-    console.log(this.DB_URI + '/user/' + this.loginService.user._id)
-    return this.http.put(this.DB_URI + '/user/fav/' + this.loginService.user._id , {new: _id});
+
+    const obv = await this.http.put(this.DB_URI + '/user/fav/' + this.loginService.user._id , {new: _id});
+    
+    this.loginService.refreshFavList();
+
+    return obv;
   }
 
-  unfavFilm({ _id }){
-    return this.http.put(this.DB_URI + '/user/unfav/' + this.loginService.user._id , {toRemove: _id});
+  async unfavFilm({ _id }){
+
+    const obv = await this.http.put(this.DB_URI + '/user/unfav/' + this.loginService.user._id , {toRemove: _id});
+
+    this.loginService.refreshFavList();
+
+    return obv;
   }
   
 }

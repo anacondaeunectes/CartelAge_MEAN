@@ -1,4 +1,3 @@
-import { ChangeDetectorRef } from '@angular/core';
 import { Component, Input, OnInit } from '@angular/core';
 import { Film } from 'src/app/models/film.model';
 import { ApiService } from 'src/app/services/api.service';
@@ -14,7 +13,8 @@ export class VerticalContainerComponent implements OnInit {
   // @Input()
   title:string = "Mis peliculas";
 
-  films:Film[] = []
+  @Input()
+  films:Film[] = [];
 
   @Input()
   favFilms:string[];
@@ -27,11 +27,10 @@ export class VerticalContainerComponent implements OnInit {
 
   isRemovingFilm:boolean = false;
 
-  constructor(public apiService:ApiService, public loginService:LoginService, public crd:ChangeDetectorRef) { }
+  constructor(public apiService:ApiService, public loginService:LoginService) { }
 
   ngOnInit(): void {
-    this.getFilms();
-    console.log('onInit')
+    this.apiService.refreshFilms();
   }
 
   
@@ -59,7 +58,7 @@ export class VerticalContainerComponent implements OnInit {
         name,
         image
       }).subscribe( res => {
-        this.getFilms();
+        this.apiService.refreshFilms();
       })
 
       this.imgInput = null;
@@ -78,20 +77,16 @@ export class VerticalContainerComponent implements OnInit {
 
       // If the film is fav, first unfav it from user's fav list and then delete it
       if (film.isFav) {
-        this.apiService.unfavFilm(film).subscribe();
+        this.apiService.unfavFilm(film)
+        .then( x => x.subscribe());
       }
 
       this.apiService.deleteFilm(film._id).subscribe( res => {
-        this.getFilms();
+        this.apiService.refreshFilms();
       })
+
       this.isRemovingFilm = false;
     }
-  }
-
-  getFilms(){
-    this.apiService.getFilms().subscribe( res => {
-      this.films = res;
-    }) 
   }
 
 }

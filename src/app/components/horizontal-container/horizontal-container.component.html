@@ -12,7 +12,7 @@
                     <polygon points="9.9, 1.1, 3.3, 21.78, 19.8, 8.58, 0, 8.58, 16.5, 21.78"/>
                 </svg>
                  para agregar películas a favoritos.</p>
-            <app-film-card *ngFor="let filmList of favFilms; index as i" [film]="films[i]" [fav]=films[i].isFav></app-film-card>
+            <app-film-card *ngFor="let filmList of favFilms; index as i" [film]="favFilms[i]" [fav]=favFilms[i].isFav></app-film-card>
         </div>
     </div>
 </div>

@@ -10,7 +10,7 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class PeliculasComponent implements OnInit {
 
-  constructor(public loginService: LoginService) { }
+  constructor(public loginService: LoginService, public apiService:ApiService) { }
 
   ngOnInit(): void {
   }
