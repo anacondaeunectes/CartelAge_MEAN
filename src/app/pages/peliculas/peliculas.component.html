@@ -1,6 +1,6 @@
 <div *ngIf="this.loginService.user; else login">
     <!-- <app-log-in></app-log-in> -->
-    <app-vertical-container [films]="this.apiService.films" [favFilms]="this.loginService.user.favRefs"></app-vertical-container>
+    <app-vertical-container [films]="this.apiService.films" [favFilms]="this.apiService.favFilms"></app-vertical-container>
 </div>
 
 <ng-template #login>

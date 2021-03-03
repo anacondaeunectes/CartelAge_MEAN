@@ -10,19 +10,59 @@ export class ApiService implements OnInit{
 
   films:Film[] = [];
 
+  favFilms:Film[] = [];
+
   readonly DB_URI:string ='http://localhost:3000/api';
 
-  constructor(private http:HttpClient, private loginService: LoginService) { }
+  constructor(private http:HttpClient, private loginService: LoginService) { 
+    this.refreshFilms();
+   }
 
+  
   ngOnInit(): void {
     this.getFilms().subscribe( res => {
       console.log(res)
-        this.films = res;
+      this.films = res;
+    })
+    
+  }
+  
+  refreshFavFilms(){
+
+    console.log('empiezo')
+
+    let tempFilm:Film;
+
+    if (this.loginService.user) {
+
+      console.log(this.loginService.user.favRefs)
+      console.log(this.films)
+
+      // Clear arrays of fav films
+      this.favFilms = [];
+      
+      //  Loop that compare user's fav references with the films array in order to get the fav films
+      this.loginService.user.favRefs.forEach( ref => {
+          
+        if (!this.favFilms.find(fav => fav._id == ref )) {
+          console.log('llego')
+          tempFilm = this.films.find( film => film._id == ref)
+          if (tempFilm) {
+            console.log(tempFilm)
+            // tempFilm.isFav = true;
+            this.favFilms.push(tempFilm)
+          }
+        }
       })
+    }
+
+
+    console.log('FAV FILM REFRESH: ', this.favFilms)
   }
 
-  refreshFilms(){
-    this.getFilms().subscribe( res => {
+  async refreshFilms(){
+    await this.getFilms().toPromise()
+    .then( res => {
       this.films = res
     })
   }
@@ -44,26 +84,19 @@ export class ApiService implements OnInit{
   }
 
   deleteFilm(id:String){
+    this.films.splice(this.films.findIndex(x => x._id == id), 1);
     return this.http.delete(this.DB_URI + '/film/' + id);
   }
 
   async favFilm({ _id }){
-    console.log('llego')
+    console.log('llego') 
 
-    const obv = await this.http.put(this.DB_URI + '/user/fav/' + this.loginService.user._id , {new: _id});
-    
-    this.loginService.refreshFavList();
-
-    return obv;
+    return this.http.put(this.DB_URI + '/user/fav/' + this.loginService.user._id , {new: _id});;
   }
 
   async unfavFilm({ _id }){
 
-    const obv = await this.http.put(this.DB_URI + '/user/unfav/' + this.loginService.user._id , {toRemove: _id});
-
-    this.loginService.refreshFavList();
-
-    return obv;
+    return this.http.put(this.DB_URI + '/user/unfav/' + this.loginService.user._id , {toRemove: _id});
   }
   
 }

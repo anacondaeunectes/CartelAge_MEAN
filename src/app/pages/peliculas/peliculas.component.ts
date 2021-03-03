@@ -13,6 +13,7 @@ export class PeliculasComponent implements OnInit {
   constructor(public loginService: LoginService, public apiService:ApiService) { }
 
   ngOnInit(): void {
+    this.apiService.refreshFavFilms();
   }
 
 }

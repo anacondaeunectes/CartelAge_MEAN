@@ -17,7 +17,7 @@ export class VerticalContainerComponent implements OnInit {
   films:Film[] = [];
 
   @Input()
-  favFilms:string[];
+  favFilms:Film[] = [];
 
   titleInput:string = "";
 
@@ -27,10 +27,22 @@ export class VerticalContainerComponent implements OnInit {
 
   isRemovingFilm:boolean = false;
 
-  constructor(public apiService:ApiService, public loginService:LoginService) { }
+  constructor(public apiService:ApiService, public loginService:LoginService) {  
+    this.apiService.refreshFavFilms();
+
+  }
 
   ngOnInit(): void {
-    this.apiService.refreshFilms();
+    console.log(this.films)
+    console.log(this.favFilms)
+    // console.log('asdadasdasdalkdjasñdk')
+    // setTimeout( () => {
+    //   console.log(this.films)
+    //   console.log(this.favFilms)
+    //   this.films.forEach( x => {
+    //     console.log(this.favFilms.includes(x))
+    //   })
+    // },2000)
   }
 
   
@@ -45,6 +57,12 @@ export class VerticalContainerComponent implements OnInit {
       this.imgInput = event.target.files[0];
     }else{
       console.log('Img type not allowed');
+    }
+  }
+
+  autoCompleteTitle(event){
+    if (this.titleInput.length == 0) {
+      this.titleInput = event.target.files[0].name.split('.').slice(0, -1).join('.');
     }
   }
 
@@ -76,13 +94,13 @@ export class VerticalContainerComponent implements OnInit {
     if (this.isRemovingFilm) {
 
       // If the film is fav, first unfav it from user's fav list and then delete it
-      if (film.isFav) {
+      // if (film.isFav) {
         this.apiService.unfavFilm(film)
         .then( x => x.subscribe());
-      }
+      // }
 
       this.apiService.deleteFilm(film._id).subscribe( res => {
-        this.apiService.refreshFilms();
+        console.log(res)
       })
 
       this.isRemovingFilm = false;

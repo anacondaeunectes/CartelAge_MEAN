@@ -15,7 +15,7 @@ export class FavoritasComponent implements OnInit {
   constructor(public loginService: LoginService, public apiService:ApiService) { }
 
   ngOnInit(): void {
-    this.apiService.refreshFilms();
+    // this.apiService.refreshFilms();
   }
 
 }

@@ -29,10 +29,11 @@ export class LoginService {
     signOut();
   }
 
-  refreshFavList(){
-    this.http.get(this.DB_URI + '/user/' + this.user._id).subscribe( res => {
+  async refreshFavList(){
+    await this.http.get(this.DB_URI + '/user/' + this.user._id).toPromise()
+    .then( res => {
       if (res) {
-        console.log(res)
+        console.log('REFRESHED FAV LIST: ', res)
         this.user.favRefs = res;
       }
     })
