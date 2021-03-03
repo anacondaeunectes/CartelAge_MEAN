@@ -1,0 +1,8 @@
+<div *ngIf="this.loginService.user; else login">
+    <!-- <app-log-in></app-log-in> -->
+    <app-vertical-container></app-vertical-container>
+</div>
+
+<ng-template #login>
+    <app-log-in></app-log-in>
+</ng-template>

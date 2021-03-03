@@ -5,9 +5,63 @@
   <title>CartelAgeMEAN</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+  <meta name="google-signin-client_id" content="79833024474-nuv9hii2pe5a14eesi4dc055u30nlmda.apps.googleusercontent.com">
+
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <script src="https://apis.google.com/js/platform.js"></script>
+
 </head>
 <body>
   <app-root></app-root>
+
+  <script>
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function() {
+            console.log('User signed out.');
+        });
+    }
+</script>
+
+<!-- <script src="assets/javascript/test.js"></script> -->
+
+<script>
+
+  function onSignIn(googleUser) {
+
+    // window.dispatchEvent(new Event('custom-event'));
+      
+      var { id_token: userToken } = googleUser.getAuthResponse();
+      // tokenTest = googleUser.getAuthResponse();
+
+      fetch('http://localhost:3000/api/google/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+        body: JSON.stringify({userToken})
+      })
+      .then( resp => {
+        resp.json()
+          .then( userInfo => {
+
+            window.angularComponentReference.zone.run( () => 
+              window.angularComponentReference.onSignInHandler(userInfo.usuario)
+            );
+          })
+      })
+      .catch( console.log())
+
+      // http.open('POST', 'http://localhost:3000/api/google/auth', true);
+      // http.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+      // http.send(JSON.stringify({userToken}))
+
+  } 
+</script>
+
+
 </body>
 </html>

@@ -1,0 +1,35 @@
+<div *ngIf="loginService.user">
+
+    <div class="vertical__Container__Wrapper">
+        <p class="vertical_Container_Title">
+            <b>{{ title }}</b>
+            <b class="vertical__Container_Add" (click)="showForm(); isRemovingFilm = false" title="Agregar película">+</b>
+            <b class="vertical__Container_Remove" (click)="isRemovingFilm = !isRemovingFilm; isAddingFilm = false" title="Eliminar película">-</b>
+        </p>
+
+        <div class="vertical__Container__Info" *ngIf="isRemovingFilm;">
+            Seleccione la película a eliminar
+        </div>
+
+        <div class="vertical__Container__Input" *ngIf="isAddingFilm;">
+            <form class="vertical__Container__Form">
+                
+                <label for="tituloInput">Título</label>
+                <input type="text" name="titulo" id="tituloInput" [(ngModel)]="titleInput" id="titleInput">
+            
+                <div>
+                    <label for="imageInput">Imagen</label>
+                    <input type="file" name="image" id="imageInput"  class="button" accept=".png, .jpg, .jpeg" (change)="setImg($event)">
+                </div>
+            </form>
+            
+            <button id="buttonAdd" class="button" (click)="addFilm()">Agregar</button>
+        </div>
+        
+        <div class="vertical__Container">
+            <p id="emptyContainer" *ngIf="films.length == 0">No se ha encontrado ninguna película. Haz click en el botón "+" de la esquina superior derecha para agregar películas.</p>
+            <app-film-card *ngFor="let filmList of films; index as i" [film]="films[i]" (click)="removeFilm(films[i])"></app-film-card>
+        </div>
+    </div>
+</div>
+

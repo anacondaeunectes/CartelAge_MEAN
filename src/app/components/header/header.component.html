@@ -1,0 +1,61 @@
+<!-- Allows dropdown menu to be 'behind' the header as hasn't been able to achieve using 'z-index' css property -->
+<div id="header__LoginDropdownMenu">
+    <div class="header_LoginDropdownMenuItem" (click)="logOut()">
+        Cerrar sesión
+    </div>
+</div>
+
+<header class="header__GeneralContainer" *ngIf="this.loginService.user as user; else login">
+    
+    <div class="header__LeftItemsContainer">
+        <div class="header__Item">
+            <img class="logo" src="../../../assets/icon/CartelAge_Colors-03.png" alt="CartelAge" height="100%" title="Go Home">
+        </div>
+        <div class="header__Item" routerLink="/peliculas">
+            Películas
+        </div>
+        <!-- <div class="header__Item" routerLink="/favoritas">
+            Favoritas
+        </div> -->
+    </div>
+    
+    <div class="header__RightItemsContainer">
+        
+        <div class="header__Item" (click)="toggleDropdownButton()">
+            <span id="header__ProfileEmail">{{ user.name }}</span>
+            <img [src]="user.imgSrc" alt="Profile Image" class="header__ProfileImage">
+
+        </div>
+    </div>
+
+    
+    
+</header>
+
+
+<div id="header__LoginDropdownMenu">
+    <div class="header_LoginDropdownMenuItem" (click)="logOut()">
+        Cerrar sesión
+    </div>
+</div>
+
+
+
+<!-- In case the user is not logged in, this template is shown as header -->
+<ng-template #login>
+
+    <header class="header__GeneralContainer">
+        <div class="header__LeftItemsContainer">
+            <div class="header__Item">
+            <img class="logo" src="../../../assets/icon/CartelAge_Colors-03.png" alt="CartelAge" height="100%" title="Go Home">
+            </div>
+        </div>
+        <!-- <div class="header__RightItemsContainer" id="testeoHandler">
+            <div class="header__Item" (click)="logIn()">
+                Iniciar Sesion
+            </div>
+        </div> -->
+
+    </header>
+
+</ng-template>
