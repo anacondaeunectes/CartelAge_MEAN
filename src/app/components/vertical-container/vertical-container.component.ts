@@ -96,8 +96,10 @@ export class VerticalContainerComponent implements OnInit {
       this.apiService.uploadFilm({
         name,
         image
-      }).subscribe( res => {
+      }).subscribe( async res => {
         this.apiService.refreshFilms();
+        await this.loginService.refreshFavList();
+        this.apiService.refreshFavFilms();
       })
 
       this.imgInput = null;

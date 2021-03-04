@@ -27,10 +27,7 @@ export class ApiService implements OnInit{
 
   
   ngOnInit(): void {
-    this.getFilms().subscribe( res => {
-      // console.log(res)
-      this.films = res;
-    })
+    this.refreshFilms();
     
   }
   
@@ -68,11 +65,16 @@ export class ApiService implements OnInit{
 
   /**
    * Refresh films array property. Used when changes on DB are made in order to live update info.
+   * Also sort it alphabetically.
    */
   async refreshFilms(){
     await this.getFilms().toPromise()
     .then( res => {
-      this.films = res
+      let filmsSorted = res.sort ( (a, b) => 
+        a.name.charAt(0).toLocaleUpperCase() > b.name.charAt(0).toLocaleUpperCase() ? 1 : -1
+      )
+      console.log(filmsSorted)
+      this.films = filmsSorted;
     })
   }
 
