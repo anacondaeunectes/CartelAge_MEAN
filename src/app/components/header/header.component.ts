@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
-// import { logIn, changeLogInHandler } from '../../../assets/javascript/test';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +8,9 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class HeaderComponent implements OnInit {
 
+  /**
+   * Property to control when the dropdown log out menu is visible
+   */
   public menu_isVisible:boolean = false;
 
   constructor(public loginService:LoginService) { }
@@ -17,15 +19,17 @@ export class HeaderComponent implements OnInit {
 
   }
 
-  logIn(){
-    console.log('Iniciando sesión');
-  }
-
+  /**
+   * Asynchronous log out
+   */
   async logOut(){
     this.loginService.logOut();
     this.toggleDropdownButton();
   }
 
+  /**
+   * Changes log out dropdown menu visibility
+   */
   toggleDropdownButton(){
 
     if (this.menu_isVisible) {

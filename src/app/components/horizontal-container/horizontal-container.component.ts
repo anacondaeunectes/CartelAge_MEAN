@@ -10,14 +10,19 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class HorizontalContainerComponent implements OnInit {
 
+  /**
+   * Container title
+   */
   @Input()
-  title:string = "TITULO";
+  title:string = "Mis favoritas";
 
+  /**
+   * Film array with user favs films
+   */
   @Input()
   favFilms:Film[] = [];
 
-  constructor(private loginService:LoginService, private apiService:ApiService) { 
-   }
+  constructor(private loginService:LoginService, private apiService:ApiService) { }
 
    ngOnInit(): void {
     this.loginService.refreshFavList();

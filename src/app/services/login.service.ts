@@ -24,7 +24,7 @@ export class LoginService {
   logOut() {
     this.clearUserInfo();
 
-    // [Temporaly workaround] Makes the web to reload to force google sign-in button appear. Google sing-in button doesnt appear even when the DOM seems to load it :(  
+    // [Temporary workaround] Makes the web to reload to force google sign-in button appear. Google sing-in button doesnt appear even when the DOM seems to load it :(  
     location.reload();
     signOut();
   }
@@ -33,7 +33,7 @@ export class LoginService {
     await this.http.get(this.DB_URI + '/user/' + this.user._id).toPromise()
     .then( res => {
       if (res) {
-        console.log('REFRESHED FAV LIST: ', res)
+        // console.log('REFRESHED FAV LIST: ', res)
         this.user.favRefs = res;
       }
     })

@@ -16,18 +16,32 @@ export class VerticalContainerComponent implements OnInit {
   // @Input()
   title:string = "Mis peliculas";
 
+  /**
+   * Film array with all DB films
+   */
   @Input()
   films:Film[] = [];
 
+  /**
+   * Film array with user favs films
+   */
   @Input()
   favFilms:Film[] = [];
 
+  /**
+   * Input title property
+   */
   titleInput:string = "";
 
+  /**
+   * Image input property
+   */
   imgInput = null;
 
+  /**
+   * Properties to control when the user is adding/removing any film
+   */
   isAddingFilm:boolean = false;
-
   isRemovingFilm:boolean = false;
 
   constructor(public apiService:ApiService, public loginService:LoginService) {  
@@ -38,27 +52,41 @@ export class VerticalContainerComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
-
+  /**
+   * Show add film from 
+   */
   showForm(){
     this.isAddingFilm = !this.isAddingFilm;
   }
 
+  /**
+   * Set 'imgInput' property with aa image from File System
+   * @param event image choosen from File System
+   * 
+   * If file type is not allowed, an alert appears
+   */
   setImg(event){
     // console.log(event.target.files[0])
     if (event.target.files[0].type == 'image/png' || event.target.files[0].type == 'image/jpg' || event.target.files[0].type == 'image/jpeg') {
       this.imgInput = event.target.files[0];
     }else{
-      console.log('Img type not allowed');
+      alert('Img type not allowed');
     }
   }
 
+  /**
+   * Updates 'titleInput' with name of file selected from the user if no title has been set before
+   * @param event image choosen from File System
+   */
   autoCompleteTitle(event){
     if (this.titleInput.length == 0) {
       this.titleInput = event.target.files[0].name.split('.').slice(0, -1).join('.');
     }
   }
 
+  /**
+   * Makes an API request to add a new film to DB
+   */
   addFilm(){
     if(this.titleInput.length > 0 && this.imgInput != null){
       // let ref:string = this.storageService.imgPath + this.imgInput.name;
@@ -83,23 +111,29 @@ export class VerticalContainerComponent implements OnInit {
 
   }
 
+  /**
+   * Makes API request to remove a film from DB.
+   * Also makes another API request to remove film reference from all users fav list 
+   * @param film film to be removed
+   */
   removeFilm(film:Film){
     if (this.isRemovingFilm) {
 
-      // If the film is fav, first unfav it from user's fav list and then delete it
-      // if (film.isFav) {
-        this.apiService.unfavFilm(film)
-        .then( x => x.subscribe());
-      // }
+      this.apiService.unfavFilmToAllUsers(film)
+      .then( x => x.subscribe());
+
 
       this.apiService.deleteFilm(film._id).subscribe( res => {
-        console.log(res)
+        // console.log(res)
       })
 
       this.isRemovingFilm = false;
     }
   }
 
+  /**
+   * Generates and download a HTML table with films info in PDF format
+   */
   generateCanvas(){
 
     const DATA = document.getElementById('tableToPdf');
@@ -125,6 +159,9 @@ export class VerticalContainerComponent implements OnInit {
       });
   }
 
+  /**
+   * Proper method to call in order to download PDF. It changes HTML table display before download it (necessary step). 
+   */
   generatePDF(){
     //Its necessary to display briefly the table in order to html2cnavas to work porperly. Tests have been made and the change has not been visible :). 
     document.getElementById('tableToPdf').style.display = 'block';

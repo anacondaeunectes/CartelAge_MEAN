@@ -1,6 +1,4 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { ApiService } from './services/api.service';
-import { LoginService } from './services/login.service';
 
 
 @Component({
@@ -15,7 +13,6 @@ export class AppComponent implements OnInit{
   constructor(){ }
 
   ngOnInit(): void {
-    // this.loadScript('https://apis.google.com/js/platform.js');
   }
 
 }
