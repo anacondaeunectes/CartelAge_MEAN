@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Film } from 'src/app/models/film.model';
 import { ApiService } from 'src/app/services/api.service';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -10,12 +9,10 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class FavoritasComponent implements OnInit {
 
-  // films:Film[];
 
   constructor(public loginService: LoginService, public apiService:ApiService) { }
 
   ngOnInit(): void {
-    // this.apiService.refreshFilms();
   }
 
 }

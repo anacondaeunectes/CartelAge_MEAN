@@ -12,8 +12,4 @@ export class LogInComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  test(){
-    console.log('asdad')
-  }
-
 }

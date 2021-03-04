@@ -1,4 +1,4 @@
-import { Injectable, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from './login.service';
 import { Film } from '../models/film.model';

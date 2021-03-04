@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Film } from 'src/app/models/film.model';
 import { ApiService } from 'src/app/services/api.service';
 import { LoginService } from 'src/app/services/login.service';
@@ -8,7 +8,7 @@ import { LoginService } from 'src/app/services/login.service';
   templateUrl: './film-card.component.html',
   styleUrls: ['./film-card.component.css']
 })
-export class FilmCardComponent implements OnInit /*, OnChanges*/ {
+export class FilmCardComponent implements OnInit {
 
   @Input()
   film:Film;
@@ -16,27 +16,9 @@ export class FilmCardComponent implements OnInit /*, OnChanges*/ {
   @Input()
   isFav:Boolean;
 
-  // @Input()
-  // favFilms:String[];
-
   constructor(private apiService:ApiService, private loginService:LoginService) { }
 
-  /*ngOnChanges(changes: SimpleChanges): void {
-    console.log('1111: ', changes.favFilms)
-    console.log('2222:', this.favFilms)
-    if (changes.favFilms && this.favFilms.length > 0) {
-
-      if(this.favFilms.includes(this.film._id)){
-        this.film.isFav = true;
-      }
-    }
-  }*/
-
   ngOnInit(): void {
-    // console.log(this.apiService.films)
-    // console.log(this.apiService.favFilms)
-    // console.log(this.film.name, this.isFav)
-    // console.log(this.apiService.favFilms.includes(this.film))
     console.log('Film: ', this.film, this.isFav)
     this.check_isFav();
   }
@@ -59,18 +41,11 @@ export class FilmCardComponent implements OnInit /*, OnChanges*/ {
         this.isFav = true;
       })
 
-
-      // .then( x => x.subscribe( res => {
-      //   console.log(res);
-      //   this.isFav = true;
-      // }))
-
       this.loginService.refreshFavList();
       this.apiService.refreshFavFilms();
 
       console.log(this.apiService.favFilms)
       
-      // this.film.isFav = !this.film.isFav;
     } else {
       
       await (await this.apiService.unfavFilm(this.film)).toPromise()
@@ -79,12 +54,6 @@ export class FilmCardComponent implements OnInit /*, OnChanges*/ {
         this.isFav = false;
       })
 
-
-      // .then( x => x.subscribe( res => {
-      //   console.log(res);
-      //   this.isFav = false;
-      // }))
-
       await this.loginService.refreshFavList();
       this.apiService.refreshFavFilms();
 
@@ -92,8 +61,6 @@ export class FilmCardComponent implements OnInit /*, OnChanges*/ {
 
     }
     
-  
-    // console.log(this.film.isFav);
   }
 
 }
