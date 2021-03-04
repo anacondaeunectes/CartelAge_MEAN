@@ -3,6 +3,7 @@
     <div class="vertical__Container__Wrapper">
         <p class="vertical_Container_Title">
             <b>{{ title }}</b>
+            <b class="vertical__Container_DownloadPDF" (click)="generatePDF()" title="Descargar PDF"> Descargar PDF </b>
             <b class="vertical__Container_Add" (click)="showForm(); isRemovingFilm = false" title="Agregar película">+</b>
             <b class="vertical__Container_Remove" (click)="isRemovingFilm = !isRemovingFilm; isAddingFilm = false" title="Eliminar película">-</b>
         </p>
@@ -31,5 +32,23 @@
             <app-film-card *ngFor="let film of films; index as i" [film]="film" [isFav]="this.favFilms.includes(film)" (click)="removeFilm(films[i])"></app-film-card>
         </div>
     </div>
+</div>
+
+
+<!-- Table that contains info to be generated as PDF. It's not displayed by default -->
+<div id="tableToPdf">
+    <table class="table table-bordered mt-4">
+        <tr class="table-primary">
+            <th>Name</th>
+            <th>Is Fav</th>
+            <th>Image format</th>
+        </tr>
+        <!-- It's used a ternary opeator within a NgStyle directive in order to change row's font-weight to bold when film is fav -->
+        <tr *ngFor="let film of films" [ngStyle]="{'font-weight':(film | isFav:this.apiService.favFilms) ? 'bold' : 'normal' }">
+            <td>{{ film.name }}</td>
+            <td>{{ film | isFav:this.apiService.favFilms }}</td>
+            <td>{{ film | getFileExtension }}</td>
+        </tr>
+        </table>
 </div>
 

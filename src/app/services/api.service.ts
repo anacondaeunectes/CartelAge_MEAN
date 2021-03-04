@@ -29,8 +29,6 @@ export class ApiService implements OnInit{
   
   refreshFavFilms(){
 
-    console.log('empiezo')
-
     let tempFilm:Film;
 
     if (this.loginService.user) {
@@ -56,8 +54,7 @@ export class ApiService implements OnInit{
       })
     }
 
-
-    console.log('FAV FILM REFRESH: ', this.favFilms)
+    // console.log('FAV FILM REFRESH: ', this.favFilms)
   }
 
   async refreshFilms(){

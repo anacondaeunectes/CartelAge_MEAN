@@ -11,7 +11,9 @@ import { HorizontalContainerComponent } from './components/horizontal-container/
 import { LogInComponent } from './pages/log-in/log-in.component';
 import { PeliculasComponent } from './pages/peliculas/peliculas.component';
 import { FormsModule } from '@angular/forms';
-import { FavoritasComponent } from './pages/favoritas/favoritas.component'
+import { FavoritasComponent } from './pages/favoritas/favoritas.component';
+import { GetFileExtensionPipe } from './pipes/get-file-extension.pipe';
+import { IsFavPipe } from './pipes/is-fav.pipe'
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { FavoritasComponent } from './pages/favoritas/favoritas.component'
     HorizontalContainerComponent,
     LogInComponent,
     PeliculasComponent,
-    FavoritasComponent
+    FavoritasComponent,
+    GetFileExtensionPipe,
+    IsFavPipe
   ],
   imports: [
     BrowserModule,

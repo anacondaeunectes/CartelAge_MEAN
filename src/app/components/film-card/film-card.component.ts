@@ -41,7 +41,8 @@ export class FilmCardComponent implements OnInit {
         this.isFav = true;
       })
 
-      this.loginService.refreshFavList();
+      //This await is important. It must end the redresh of the user fav list before update fav Film array
+      await this.loginService.refreshFavList();
       this.apiService.refreshFavFilms();
 
       console.log(this.apiService.favFilms)
@@ -54,6 +55,7 @@ export class FilmCardComponent implements OnInit {
         this.isFav = false;
       })
 
+      //This await is important. It must end the redresh of the user fav list before update fav Film array
       await this.loginService.refreshFavList();
       this.apiService.refreshFavFilms();
 
