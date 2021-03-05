@@ -71,9 +71,10 @@ export class ApiService implements OnInit{
     await this.getFilms().toPromise()
     .then( res => {
       let filmsSorted = res.sort ( (a, b) => 
-        a.name.charAt(0).toLocaleUpperCase() > b.name.charAt(0).toLocaleUpperCase() ? 1 : -1
+      // JS function to alphabetically compare  two strings       
+        a.name.localeCompare(b.name)
       )
-      console.log(filmsSorted)
+      // console.log(filmsSorted)
       this.films = filmsSorted;
     })
   }
