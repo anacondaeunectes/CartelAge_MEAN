@@ -3,9 +3,8 @@
 }
 
 .vertical_Container_Title{
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-bottom: 20px;
+    padding: 5px 15px 15px 20px;
+    overflow: auto;
 }
 
 .vertical__Container{
@@ -20,10 +19,16 @@
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
 }
 
-app-film-short-card:hover{
+/* app-film-card:hover{
     border-radius: 6px;
-    /* transform: scale(1.04) */
+    transform: scale(1.04);
     background-color: rgba(0,0,0,0.12);
+} */
+
+.vertical_Container_Buttons_Wrapper{
+    display: inline;
+    float: right;
+    /* text-align: end; */
 }
 
 .vertical__Container_Add{
@@ -31,7 +36,7 @@ app-film-short-card:hover{
     padding-right: 8px;
     font-size: 20px;
     color: gray;
-    float: right;
+    /* float: right; */
     cursor: pointer;
     background-color: #ffffff;
     border-radius: 8px;
@@ -43,7 +48,7 @@ app-film-short-card:hover{
     padding-right: 8px;
     font-size: 20px;
     color: gray;
-    float: right;
+    /* float: right; */
     cursor: pointer;
     margin-right: 20px;
     background-color: #ffffff;
@@ -54,7 +59,23 @@ app-film-short-card:hover{
 .vertical__Container_DownloadPDF{
     padding-left: 8px;
     padding-right: 8px;
-    padding-top: 4px;
+    padding-top: 5px;
+    padding-bottom: 2px;
+    font-size: 14px;
+    margin-left: 20px;
+    height: 34px;
+    color: gray;
+    /* float: right; */
+    cursor: pointer;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+.vertical__Container_Search{
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 2px;
     font-size: 14px;
     margin-left: 20px;
     height: 24px;
@@ -64,6 +85,22 @@ app-film-short-card:hover{
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+#searchInput{
+    vertical-align: super;
+    margin-top: 0px;
+}
+
+#lupa{
+    margin-top: 1px;
+    margin-right: 2px;
+    height: 75%;
+}
+
+.vertical__Container_Search input{
+    border: none;
+    outline: none;
 }
 
 .vertical__Container_DownloadPDF:hover{
@@ -161,4 +198,29 @@ label{
     text-align: left;
     background-color: #d8922a;
     color: white;
-  }
+}
+
+@media screen and (max-width: 576px){
+
+    .vertical_Container_Title > b{
+        display: none;
+    }
+
+    .vertical__Container_Title{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .vertical__Container_Search{
+        margin-bottom: 15px;
+        width: 100%;
+        /* margin-left: 50%;
+        margin-bottom: 15px; */
+    }
+
+    .vertical_Container_Buttons_Wrapper{
+        width: 100%;
+    }
+
+}

@@ -21,17 +21,21 @@ export class VerticalContainerComponent implements OnInit {
    */
   @Input()
   films:Film[] = [];
-
+  
   /**
-   * Film array with user favs films
+   * Property bound to search Input field. 
    */
-  @Input()
-  favFilms:Film[] = [];
+  searchInput:string = '';
 
   /**
    * Input title property
    */
   titleInput:string = "";
+
+  /**
+   * Film array that holds search results
+   */
+  searchFilms:Film[] = [];
 
   /**
    * Image input property
@@ -48,8 +52,16 @@ export class VerticalContainerComponent implements OnInit {
     this.apiService.refreshFavFilms();
 
   }
-
+  
   ngOnInit(): void {
+  }
+  
+  /**
+   * Set 'searchFilms' property to the result of filtering 'films' array property with the 'searchInput' property
+   */
+  filterFilms(){
+
+    this.searchFilms = this.films.filter( film => film.name.toLowerCase().includes(this.searchInput.toLowerCase()))  
   }
 
   /**

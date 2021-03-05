@@ -95,10 +95,6 @@
     background-color: rgba(0,0,0,0.1);
 }
 
-/* .header__LoginNotDisplayed{
-    visibility: visible;
-} */
-
 @media screen and (max-width: 576px){
     /* In case the device width is smaller than 576 pixels, the user profile email is not showed */
     #header__ProfileEmail{
