@@ -105,6 +105,9 @@ export class VerticalContainerComponent implements OnInit {
       let name = this.titleInput;
       let image = this.imgInput;
 
+      // Clear searchInput in order to show the whole film list to see the added one
+      this.searchInput = "";
+
       this.apiService.uploadFilm({
         name,
         image
@@ -133,6 +136,7 @@ export class VerticalContainerComponent implements OnInit {
   removeFilm(film:Film){
     if (this.isRemovingFilm) {
 
+
       this.apiService.unfavFilmToAllUsers(film)
       .then( x => x.subscribe());
 
@@ -140,6 +144,11 @@ export class VerticalContainerComponent implements OnInit {
       this.apiService.deleteFilm(film._id).subscribe( res => {
         // console.log(res)
       })
+
+      // In case the user has made a search and decides to remove a search matchup film, this conditional makes it also to refresh 'searchFilm' array.
+      if (this.searchInput.length > 0) {
+        this.filterFilms(); 
+       }  
 
       this.isRemovingFilm = false;
     }
