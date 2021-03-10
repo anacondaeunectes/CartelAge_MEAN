@@ -37,8 +37,14 @@
         <div class="vertical__Container">
             <p id="emptyContainer" *ngIf="films.length == 0">No se ha encontrado ninguna película. Haz click en el botón "+" de la esquina superior derecha para agregar películas.</p>
             <p id="noSearchMatch__Container" *ngIf="searchInput.length > 0 && searchFilms.length == 0">No se ha encontrado  ninguna película que contenga "{{ searchInput }}".</p>
+            
             <!-- *NgFor directive is conditional. If 'searchInput' property is empty, it takes films array, if 'searchInput' is not empty it takes searchFilms. This allows seach functionality to works -->
-            <app-film-card *ngFor="let film of (searchInput.length == 0 ? films : searchFilms); index as i" [film]="film" [isFav]="film | isFav:this.apiService.favFilms" (click)="removeFilm(film)"></app-film-card>
+            <app-film-card [ngClass]="isRemovingFilm ? 'card_Wrapper--removing' : 'card_Wrapper'"
+             *ngFor="let film of (searchInput.length == 0 ? films : searchFilms); index as i"
+             [film]="film" [isFav]="film | isFav:this.apiService.favFilms"
+             (click)="removeFilm(film)">
+            </app-film-card>
+            
         </div>
     </div>
 </div>
